@@ -1,7 +1,6 @@
 require "date_range_covers/version"
 require 'date'
-require 'active_support'
-require 'a_date'
+require 'active_support/all'
 
 module DateRangeCovers
   class DateRange
@@ -140,21 +139,21 @@ module DateRangeCovers
       unless options.empty?
         case options[:include]
         when :both
-          s_date = ADate.beginning_of_week(s_date, beginning_of_week_day)
-          e_date = ADate.end_of_week(e_date, beginning_of_week_day)
+          s_date = s_date.beginning_of_week(beginning_of_week_day)
+          e_date = e_date.end_of_week(beginning_of_week_day)
 
-          start_of_e_week = ADate.beginning_of_week(e_date, beginning_of_week_day)
+          start_of_e_week = e_date.beginning_of_week(beginning_of_week_day)
 
           weeks << s_date unless is_covered?(s_date)         
           weeks << start_of_e_week unless is_covered?(start_of_e_week)         
 
         when :start_week
-          s_date = ADate.beginning_of_week(s_date, beginning_of_week_day)
+          s_date = s_date.beginning_of_week(beginning_of_week_day)
           weeks << s_date unless is_covered?(s_date)
 
         when :end_week 
-          e_date = ADate.end_of_week(e_date, beginning_of_week_day)
-          start_of_e_week = ADate.beginning_of_week(e_date, beginning_of_week_day)
+          e_date = e_date.end_of_week(beginning_of_week_day)
+          start_of_e_week = e_date.beginning_of_week(beginning_of_week_day)
           
           weeks << start_of_e_week unless is_covered?(start_of_e_week)         
         end
@@ -163,16 +162,16 @@ module DateRangeCovers
       #We need to iterate through every week and 
       #see if the week is wholly contained in the 
       #date range
-      bottom_of_week = ADate.beginning_of_week(s_date, beginning_of_week_day)
-      top_of_week = bottom_of_week + 6
+      bottom_of_week = s_date.beginning_of_week(beginning_of_week_day)
+      top_of_week = s_date.end_of_week(beginning_of_week_day)
 
       while bottom_of_week < e_date do
         if (s_date..e_date).include?(bottom_of_week..top_of_week)\
             and !date_range_flows_into_selected_months?(bottom_of_week, top_of_week) # if part of a week already belongs to a covered month, we should not add that week to the list
           weeks << bottom_of_week unless is_covered?(bottom_of_week)
         end
-        bottom_of_week += 7
-        top_of_week = bottom_of_week + 6
+        bottom_of_week = bottom_of_week.next_week(beginning_of_week_day)
+        top_of_week = bottom_of_week.end_of_week(beginning_of_week_day)
       end
 
       covs[:weeks] = weeks.compact.uniq.sort
@@ -259,8 +258,8 @@ module DateRangeCovers
 
       if !is_covered and covs[:weeks] and !covs[:weeks].empty?
         covs[:weeks].each do |week_date|
-          start_week = ADate.beginning_of_week(week_date, beginning_of_week_day)
-          end_week = ADate.end_of_week(week_date, beginning_of_week_day)
+          start_week = week_date.beginning_of_week(beginning_of_week_day)
+          end_week = week_date.end_of_week(beginning_of_week_day)
           is_covered = (start_week..end_week).include?(dates) ? true : false
           break if is_covered
         end
