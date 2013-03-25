@@ -311,9 +311,9 @@ describe DateRangeCovers do
             covers[:weeks].should include Date.parse(date)
           end
          
-          covers[:dates].length.should == 6
+          covers[:days].length.should == 6
           %w(2013-03-06 2013-03-07 2013-03-08 2013-03-09 2013-03-31 2013-06-01).each do |date|
-            covers[:dates].should include Date.parse(date)
+            covers[:days].should include Date.parse(date)
           end
         end
       end
@@ -328,12 +328,12 @@ describe DateRangeCovers do
 
           covers[:weeks].should be_nil
 
-          covers[:dates].length.should == 48
+          covers[:days].length.should == 48
           (6..31).each do |day|
-            covers[:dates].should include Date.parse("2013-03-#{day}")
+            covers[:days].should include Date.parse("2013-03-#{day}")
           end
           (1..22).each do |day|
-            covers[:dates].should include Date.parse("2013-06-#{day}")
+            covers[:days].should include Date.parse("2013-06-#{day}")
           end
         end
       end
@@ -343,18 +343,18 @@ describe DateRangeCovers do
         it "should return with just the weeks and dates" do
           covers[:months].should be_nil
           covers[:weeks].length.should == 15 
-          covers[:dates].length.should == 4 
+          covers[:days].length.should == 4 
         end
       end
   
       context 'when include is :dates' do
-        let(:covers) { drange.covers([:dates]) }
+        let(:covers) { drange.covers([:days]) }
         it "should return with just the days between" do
           covers[:months].should be_nil
           covers[:weeks].should be_nil
-          covers[:dates].length.should == (start_date..end_date).collect {|date| date}.length
+          covers[:days].length.should == (start_date..end_date).collect {|date| date}.length
           (start_date..end_date).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
@@ -371,12 +371,12 @@ describe DateRangeCovers do
           covers[:months].should be_empty
           covers[:weeks].length.should == 1
           covers[:weeks].should include Date.parse('2013-03-10')
-          covers[:dates].length.should == 10
+          covers[:days].length.should == 10
           (Date.parse('2013-03-06')..Date.parse('2013-03-09')).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
           (Date.parse('2013-03-17')..Date.parse('2013-03-22')).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
@@ -386,9 +386,9 @@ describe DateRangeCovers do
         it "should return with just the days between" do
           covers[:months].should be_empty
           covers[:weeks].should be_nil
-          covers[:dates].length.should == 17 
+          covers[:days].length.should == 17 
           (start_date..end_date).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
@@ -399,24 +399,24 @@ describe DateRangeCovers do
           covers[:months].should be_nil
           covers[:weeks].length.should == 1
           covers[:weeks].should include Date.parse('2013-03-10')
-          covers[:dates].length.should == 10
+          covers[:days].length.should == 10
           (Date.parse('2013-03-06')..Date.parse('2013-03-09')).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
           (Date.parse('2013-03-17')..Date.parse('2013-03-22')).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
   
       context 'when include is :dates' do
-        let(:covers) { drange.covers([:dates]) }
+        let(:covers) { drange.covers([:days]) }
         it "should return with just the days between" do
           covers[:months].should be_nil
           covers[:weeks].should be_nil
-          covers[:dates].length.should == 17 
+          covers[:days].length.should == 17 
           (start_date..end_date).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
@@ -432,9 +432,9 @@ describe DateRangeCovers do
         it "should return with just the days between" do
           covers[:months].should be_empty
           covers[:weeks].should be_empty
-          covers[:dates].should_not be_empty
+          covers[:days].should_not be_empty
           (start_date..end_date).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
@@ -444,9 +444,9 @@ describe DateRangeCovers do
         it "should return with just the days between" do
           covers[:months].should be_empty
           covers[:weeks].should be_nil
-          covers[:dates].should_not be_empty
+          covers[:days].should_not be_empty
           (start_date..end_date).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
@@ -456,21 +456,21 @@ describe DateRangeCovers do
         it "should return with just the days between" do
           covers[:months].should be_nil
           covers[:weeks].should be_empty
-          covers[:dates].should_not be_empty
+          covers[:days].should_not be_empty
           (start_date..end_date).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end
   
       context 'when include is :dates' do
-        let(:covers) { drange.covers([:dates]) }
+        let(:covers) { drange.covers([:days]) }
         it "should return with just the days between" do
           covers[:months].should be_nil
           covers[:weeks].should be_nil
-          covers[:dates].should_not be_empty
+          covers[:days].should_not be_empty
           (start_date..end_date).each do |date|
-            covers[:dates].should include date
+            covers[:days].should include date
           end
         end
       end

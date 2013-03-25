@@ -22,13 +22,13 @@ Or install it yourself as:
 
     start_date = Date.parse('2013-01-01')
     end_date = Date.parse('2013-04-11')
-    start_of_week = :sunday
+    start_of_week = :sunday #or :monday
 
     d = DateRangeCovers::DateRange.new(start_date, end_date, start_of_week)
 
-    d.covers
+    d.covers #the date range partitioned into months, weeks and days
     => {
-      :dates=>[
+      :days=>[
         Mon, 01 Apr 2013, Tue, 02 Apr 2013, Wed, 03 Apr 2013, Thu, 04 Apr 2013, 
         Fri, 05 Apr 2013, Sat, 06 Apr 2013, Sun, 07 Apr 2013, Mon, 08 Apr 2013,
         Tue, 09 Apr 2013, Wed, 10 Apr 2013, Thu, 11 Apr 2013
@@ -36,6 +36,25 @@ Or install it yourself as:
       :months=>[Tue, 01 Jan 2013, Fri, 01 Feb 2013, Fri, 01 Mar 2013], 
       :weeks=>[]
     }
+
+    params = [:days] #all dates within the date range   
+    d.covers params
+
+    params = [:weeks] #the days in the date range partitioned into weeks/days
+    d.covers params
+
+    params = [:months] #days in the date range partitioned into months/days
+    d.covers params
+    
+    params = [:days, :weeks] #same as [:weeks]
+    d.covers params
+
+    params = [:days, :months] #same as [:months]
+    d.covers params
+    
+    params = [:weeks, :months] #same as [:all]
+    d.covers params
+
 
 ## Contributing
 

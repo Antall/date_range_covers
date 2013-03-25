@@ -201,7 +201,7 @@ module DateRangeCovers
         dates = handle_date_range(s_date, e_date, options)
       end
 
-      covs[:dates] = dates.compact.sort
+      covs[:days] = dates.compact.sort
     end
 
    def handle_single_date_range(s_date, e_date, options)
@@ -231,6 +231,28 @@ module DateRangeCovers
       return (s_date..e_date).collect { |date| date unless is_covered?(date) }
     end
 
+    # Returns dates within a date range, partitioned in
+    # months/weeks/days.
+    #
+    # Dates that are not boxed by a week or month, are returned as days. 
+    #
+    # @example
+    #   covered_range = DateRangeCovers::DateRange.covers
+    #   covered_range = DateRangeCovers::DateRange.covers(params)
+    #
+    # @params
+    #   [:all] or no params => default, the date range partitioned into months, weeks and days
+    #   [:days] => all dates within the date range   
+    #   [:weeks] => the days in the date range partitioned into weeks/days
+    #   [:months] => days in the date range partitioned into months/days
+    
+    #   [:days, :weeks] => same as [:weeks]
+    #   [:days, :months] => same as [:months]
+    #   [:weeks, :months] => same as [:all]
+    #
+    # @return Hash
+    #
+    # @api public 
     def covers(cover_options = [:all])
       @covs = {}
 
