@@ -1,0 +1,12 @@
+.github/**/*
+.dockerignore
+.gitignore
+.git
+
+
+vendor/**/*
+
+Dockerfile
+README.md
+
+Taskfile.yml
