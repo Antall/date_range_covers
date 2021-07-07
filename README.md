@@ -10,11 +10,11 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $bundle
 
 Or install it yourself as:
 
-    $ gem install date_range_covers
+    $gem install date_range_covers
 
 ## Usage
 
@@ -29,15 +29,15 @@ Or install it yourself as:
     d.covers #the date range partitioned into months, weeks and days
     => {
       :days=>[
-        Mon, 01 Apr 2013, Tue, 02 Apr 2013, Wed, 03 Apr 2013, Thu, 04 Apr 2013, 
+        Mon, 01 Apr 2013, Tue, 02 Apr 2013, Wed, 03 Apr 2013, Thu, 04 Apr 2013,
         Fri, 05 Apr 2013, Sat, 06 Apr 2013, Sun, 07 Apr 2013, Mon, 08 Apr 2013,
         Tue, 09 Apr 2013, Wed, 10 Apr 2013, Thu, 11 Apr 2013
-      ], 
-      :months=>[Tue, 01 Jan 2013, Fri, 01 Feb 2013, Fri, 01 Mar 2013], 
+      ],
+      :months=>[Tue, 01 Jan 2013, Fri, 01 Feb 2013, Fri, 01 Mar 2013],
       :weeks=>[]
     }
 
-    params = [:days] #all dates within the date range   
+    params = [:days] #all dates within the date range
     d.covers params
 
     params = [:weeks] #the days in the date range partitioned into weeks/days
@@ -45,16 +45,15 @@ Or install it yourself as:
 
     params = [:months] #days in the date range partitioned into months/days
     d.covers params
-    
+
     params = [:days, :weeks] #same as [:weeks]
     d.covers params
 
     params = [:days, :months] #same as [:months]
     d.covers params
-    
+
     params = [:weeks, :months] #same as [:all]
     d.covers params
-
 
 ## Contributing
 

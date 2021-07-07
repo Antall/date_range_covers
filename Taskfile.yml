@@ -8,7 +8,6 @@ tasks:
 
   test:
     desc: Run tests
-    deps: [build]
     cmds:
       - docker-compose run --rm app bundle exec rspec
 
