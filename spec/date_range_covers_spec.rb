@@ -1,4 +1,4 @@
-require 'lib/date_range_covers'
+require 'date_range_covers'
 
 describe DateRangeCovers do
   describe "#is_single_date_range?" do
@@ -17,7 +17,7 @@ describe DateRangeCovers do
         drange.is_single_date_range?.should == false
       end
     end
- 
+
     context 'when different start and end dates are passed' do
       it 'should return false' do
         date = Date.today
@@ -26,7 +26,7 @@ describe DateRangeCovers do
       end
     end
   end
- 
+
   describe "#is_date_range?" do
     context 'when same start and end dates are passed' do
       it 'should return false' do
@@ -43,7 +43,7 @@ describe DateRangeCovers do
         drange.is_date_range?.should == false
       end
     end
- 
+
     context 'when different start and end dates are passed' do
       it 'should return true' do
         date = Date.today
@@ -57,14 +57,14 @@ describe DateRangeCovers do
     context 'when dates are in the same month' do
       let(:date) { Date.today }
       let(:drange) { DateRangeCovers::DateRange.new(date, date, :sunday) }
-        
+
       context 'when include is nil' do
         let(:months) { drange.months_covered }
         it 'should return no months' do
           months.should be_empty
         end
       end
- 
+
       context 'when include is start_month' do
         let(:months) { drange.months_covered(:include => :start_month) }
         it 'should return start months' do
@@ -72,7 +72,7 @@ describe DateRangeCovers do
           months.should include date.beginning_of_month
         end
       end
- 
+
       context 'when include is end_month' do
         let(:months) { drange.months_covered(:include => :end_month) }
         it 'should return end months' do
@@ -80,7 +80,7 @@ describe DateRangeCovers do
           months.should include date.beginning_of_month
         end
       end
- 
+
       context 'when include is both' do
         let(:months) { drange.months_covered(:include => :both) }
         it 'should return start months' do
@@ -95,7 +95,7 @@ describe DateRangeCovers do
         let(:start_date) { Date.parse('2013-03-01') }
         let(:end_date) { Date.parse('2013-03-31') }
         let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
         context 'when include is nil' do
           let(:months) { drange.months_covered }
           it 'should return month with current start date' do
@@ -103,7 +103,7 @@ describe DateRangeCovers do
             months.should include start_date.beginning_of_month
           end
         end
- 
+
         context 'when include is start_month' do
           let(:months) { drange.months_covered(:include => :start_month) }
           it 'should return month with current start date' do
@@ -111,7 +111,7 @@ describe DateRangeCovers do
             months.should include start_date.beginning_of_month
           end
         end
- 
+
         context 'when include is end_month' do
           let(:months) { drange.months_covered(:include => :end_month) }
           it 'should return month with current start date' do
@@ -119,7 +119,7 @@ describe DateRangeCovers do
             months.should include start_date.beginning_of_month
           end
         end
-       
+
         context 'when include is both' do
           let(:months) { drange.months_covered(:include => :both) }
           it 'should return month with current start date' do
@@ -133,14 +133,14 @@ describe DateRangeCovers do
         let(:start_date) { Date.parse('2013-03-01') }
         let(:end_date) { Date.parse('2013-03-30') }
         let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
         context 'when include is nil' do
           let(:months) { drange.months_covered }
           it 'should return no months' do
             months.should be_empty
           end
         end
- 
+
         context 'when include is start_month' do
           let(:months) { drange.months_covered(:include => :start_month) }
           it 'should return month with current start date' do
@@ -148,7 +148,7 @@ describe DateRangeCovers do
             months.should include start_date.beginning_of_month
           end
         end
- 
+
         context 'when include is end_month' do
           let(:months) { drange.months_covered(:include => :end_month) }
           it 'should return month with current start date' do
@@ -156,7 +156,7 @@ describe DateRangeCovers do
             months.should include start_date.beginning_of_month
           end
         end
-       
+
         context 'when include is both' do
           let(:months) { drange.months_covered(:include => :both) }
           it 'should return month with current start date' do
@@ -165,19 +165,19 @@ describe DateRangeCovers do
           end
         end
       end
-      
+
       context '2013-02-15 to 2013-03-15' do
         let(:start_date) { Date.parse('2013-02-15') }
         let(:end_date) { Date.parse('2013-03-15') }
         let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
         context 'when include is nil' do
           let(:months) { drange.months_covered }
           it 'should return no months' do
             months.should be_empty
           end
         end
- 
+
         context 'when include is start_month' do
           let(:months) { drange.months_covered(:include => :start_month) }
           it 'should return month with current start date' do
@@ -185,7 +185,7 @@ describe DateRangeCovers do
             months.should include start_date.beginning_of_month
           end
         end
- 
+
         context 'when include is end_month' do
           let(:months) { drange.months_covered(:include => :end_month) }
           it 'should return month with current start date' do
@@ -193,7 +193,7 @@ describe DateRangeCovers do
             months.should include end_date.beginning_of_month
           end
         end
-       
+
         context 'when include is both' do
           let(:months) { drange.months_covered(:include => :both) }
           it 'should return month with current start date' do
@@ -203,12 +203,12 @@ describe DateRangeCovers do
           end
         end
       end
-      
+
       context '2013-02-15 to 2013-04-15' do
         let(:start_date) { Date.parse('2013-02-15') }
         let(:end_date) { Date.parse('2013-04-15') }
         let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
         context 'when include is nil' do
           let(:months) { drange.months_covered }
           it 'should return no months' do
@@ -216,7 +216,7 @@ describe DateRangeCovers do
             months.should include Date.parse('2013-03-01')
           end
         end
- 
+
         context 'when include is start_month' do
           let(:months) { drange.months_covered(:include => :start_month) }
           it 'should return month with current start date' do
@@ -225,7 +225,7 @@ describe DateRangeCovers do
             months.should include Date.parse('2013-03-01')
           end
         end
- 
+
         context 'when include is end_month' do
           let(:months) { drange.months_covered(:include => :end_month) }
           it 'should return month with current start date' do
@@ -234,7 +234,7 @@ describe DateRangeCovers do
             months.should include Date.parse('2013-03-01')
           end
         end
-       
+
         context 'when include is both' do
           let(:months) { drange.months_covered(:include => :both) }
           it 'should return month with current start date' do
@@ -250,7 +250,7 @@ describe DateRangeCovers do
         let(:start_date) { Date.parse('2013-02-01') }
         let(:end_date) { Date.parse('2013-04-15') }
         let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
         context 'when include is nil' do
           let(:months) { drange.months_covered }
           it 'should return no months' do
@@ -259,7 +259,7 @@ describe DateRangeCovers do
             months.should include start_date.beginning_of_month
           end
         end
- 
+
         context 'when include is start_month' do
           let(:months) { drange.months_covered(:include => :start_month) }
           it 'should return month with current start date' do
@@ -268,7 +268,7 @@ describe DateRangeCovers do
             months.should include Date.parse('2013-03-01')
           end
         end
- 
+
         context 'when include is end_month' do
           let(:months) { drange.months_covered(:include => :end_month) }
           it 'should return month with current start date' do
@@ -278,7 +278,7 @@ describe DateRangeCovers do
             months.should include Date.parse('2013-03-01')
           end
         end
-       
+
         context 'when include is both' do
           let(:months) { drange.months_covered(:include => :both) }
           it 'should return month with current start date' do
@@ -297,7 +297,7 @@ describe DateRangeCovers do
       let(:start_date) { Date.parse('2013-03-06') }
       let(:end_date) { Date.parse('2013-06-22') }
       let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
       context 'when include is :all' do
         let(:covers) { drange.covers }
         it "should return with just the days between" do
@@ -305,19 +305,19 @@ describe DateRangeCovers do
           (4..5).each do |month|
             covers[:months].should include Date.parse("2013-#{month}-01")
           end
-          
+
           covers[:weeks].length.should == 6
           %w(2013-03-10 2013-03-17 2013-03-24 2013-06-02 2013-06-09 2013-06-16).each do |date|
             covers[:weeks].should include Date.parse(date)
           end
-         
+
           covers[:days].length.should == 6
           %w(2013-03-06 2013-03-07 2013-03-08 2013-03-09 2013-03-31 2013-06-01).each do |date|
             covers[:days].should include Date.parse(date)
           end
         end
       end
- 
+
       context 'when include is :months' do
         let(:covers) { drange.covers([:months]) }
         it "should return with just the days between" do
@@ -337,16 +337,16 @@ describe DateRangeCovers do
           end
         end
       end
- 
+
       context 'when include is :weeks' do
         let(:covers) { drange.covers([:weeks]) }
         it "should return with just the weeks and dates" do
           covers[:months].should be_nil
-          covers[:weeks].length.should == 15 
-          covers[:days].length.should == 4 
+          covers[:weeks].length.should == 15
+          covers[:days].length.should == 4
         end
       end
-  
+
       context 'when include is :dates' do
         let(:covers) { drange.covers([:days]) }
         it "should return with just the days between" do
@@ -364,7 +364,7 @@ describe DateRangeCovers do
       let(:start_date) { Date.parse('2013-03-06') }
       let(:end_date) { Date.parse('2013-03-22') }
       let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
       context 'when include is :all' do
         let(:covers) { drange.covers }
         it "should return with just the days between" do
@@ -380,19 +380,19 @@ describe DateRangeCovers do
           end
         end
       end
- 
+
       context 'when include is :months' do
         let(:covers) { drange.covers([:months]) }
         it "should return with just the days between" do
           covers[:months].should be_empty
           covers[:weeks].should be_nil
-          covers[:days].length.should == 17 
+          covers[:days].length.should == 17
           (start_date..end_date).each do |date|
             covers[:days].should include date
           end
         end
       end
- 
+
       context 'when include is :weeks' do
         let(:covers) { drange.covers([:weeks]) }
         it "should return with just the days between" do
@@ -408,13 +408,13 @@ describe DateRangeCovers do
           end
         end
       end
-  
+
       context 'when include is :dates' do
         let(:covers) { drange.covers([:days]) }
         it "should return with just the days between" do
           covers[:months].should be_nil
           covers[:weeks].should be_nil
-          covers[:days].length.should == 17 
+          covers[:days].length.should == 17
           (start_date..end_date).each do |date|
             covers[:days].should include date
           end
@@ -426,7 +426,7 @@ describe DateRangeCovers do
       let(:start_date) { Date.parse('2013-03-06') }
       let(:end_date) { Date.parse('2013-03-15') }
       let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, :sunday) }
- 
+
       context 'when include is :all' do
         let(:covers) { drange.covers }
         it "should return with just the days between" do
@@ -438,7 +438,7 @@ describe DateRangeCovers do
           end
         end
       end
- 
+
       context 'when include is :months' do
         let(:covers) { drange.covers([:months]) }
         it "should return with just the days between" do
@@ -450,7 +450,7 @@ describe DateRangeCovers do
           end
         end
       end
- 
+
       context 'when include is :weeks' do
         let(:covers) { drange.covers([:weeks]) }
         it "should return with just the days between" do
@@ -462,7 +462,7 @@ describe DateRangeCovers do
           end
         end
       end
-  
+
       context 'when include is :dates' do
         let(:covers) { drange.covers([:days]) }
         it "should return with just the days between" do
@@ -483,7 +483,7 @@ describe DateRangeCovers do
         let(:date) { Date.today }
         let(:start_of_week) { :sunday }
         let(:drange) { DateRangeCovers::DateRange.new(date, date, start_of_week) }
-       
+
         context 'when include is nil' do
           let(:weeks) { drange.weeks_covered }
           it 'should return no weeks' do
@@ -498,7 +498,7 @@ describe DateRangeCovers do
             weeks.should include date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :end_week' do
           let(:weeks) { drange.weeks_covered(:include => :end_week) }
           it 'should return week containing the end date' do
@@ -506,7 +506,7 @@ describe DateRangeCovers do
             weeks.should include date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :both' do
           let(:weeks) { drange.weeks_covered(:include => :both) }
           it 'should return weeks containing the start date and the end date' do
@@ -518,12 +518,12 @@ describe DateRangeCovers do
     end
 
     context "when dates are in different weeks" do
-      context '2013-03-02(Saturday) to 2013-03-03(Sunday)' do 
+      context '2013-03-02(Saturday) to 2013-03-03(Sunday)' do
         let(:start_date) { Date.parse('2013-03-02') }
         let(:end_date) { Date.parse('2013-03-03') }
         let(:start_of_week) { :sunday }
         let(:drange) { DateRangeCovers::DateRange.new(start_date, end_date, start_of_week) }
-        
+
         context 'when include is nil' do
           let(:weeks) { drange.weeks_covered }
           it 'should return no weeks' do
@@ -538,7 +538,7 @@ describe DateRangeCovers do
             weeks.should include start_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :end_week' do
           let(:weeks) { drange.weeks_covered(:include => :end_week) }
           it 'should return beginning of end week' do
@@ -546,7 +546,7 @@ describe DateRangeCovers do
             weeks.should include end_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :both' do
           let(:weeks) { drange.weeks_covered(:include => :both) }
           it 'should return beginning of start week and end week' do
@@ -556,8 +556,8 @@ describe DateRangeCovers do
           end
         end
       end
-      
-      context '2013-03-03(Sunday) to 2013-03-09(Saturday)' do 
+
+      context '2013-03-03(Sunday) to 2013-03-09(Saturday)' do
         let(:start_date) { Date.parse('2013-03-03') }
         let(:end_date) { Date.parse('2013-03-09') }
         let(:start_of_week) { :sunday }
@@ -577,7 +577,7 @@ describe DateRangeCovers do
             weeks.should include start_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :end_week' do
           let(:weeks) { drange.weeks_covered(:include => :end_week) }
           it 'should return beginning of end week' do
@@ -585,7 +585,7 @@ describe DateRangeCovers do
             weeks.should include end_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :both' do
           let(:weeks) { drange.weeks_covered(:include => :both) }
           it 'should return beginning of start week and end week' do
@@ -596,7 +596,7 @@ describe DateRangeCovers do
         end
       end
 
-      context '2013-03-03(Sunday) to 2013-03-10(Sunday)' do 
+      context '2013-03-03(Sunday) to 2013-03-10(Sunday)' do
         let(:start_date) { Date.parse('2013-03-03') }
         let(:end_date) { Date.parse('2013-03-10') }
         let(:start_of_week) { :sunday }
@@ -618,7 +618,7 @@ describe DateRangeCovers do
             weeks.should_not include end_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :end_week' do
           let(:weeks) { drange.weeks_covered(:include => :end_week) }
           it 'should return beginning of end week' do
@@ -627,7 +627,7 @@ describe DateRangeCovers do
             weeks.should include start_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :both' do
           let(:weeks) { drange.weeks_covered(:include => :both) }
           it 'should return beginning of start week and end week' do
@@ -638,7 +638,7 @@ describe DateRangeCovers do
         end
       end
 
-      context '2013-03-05(Tuesday) to 2013-03-31(Sunday)' do 
+      context '2013-03-05(Tuesday) to 2013-03-31(Sunday)' do
         let(:start_date) { Date.parse('2013-03-05') }
         let(:end_date) { Date.parse('2013-03-31') }
         let(:start_of_week) { :sunday }
@@ -664,7 +664,7 @@ describe DateRangeCovers do
             weeks.should_not include end_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :end_week' do
           let(:weeks) { drange.weeks_covered(:include => :end_week) }
           it 'should return beginning of end week' do
@@ -676,7 +676,7 @@ describe DateRangeCovers do
             weeks.should include end_date.beginning_of_week(start_of_week)
           end
         end
- 
+
         context 'when include is :both' do
           let(:weeks) { drange.weeks_covered(:include => :both) }
           it 'should return beginning of start week and end week' do
@@ -702,23 +702,23 @@ describe DateRangeCovers do
         let(:dates)  { drange.dates_covered }
         it { dates.should be_empty }
       end
-      
+
       context 'when include is set to :both' do
         let(:dates)  { drange.dates_covered(:include => :both) }
         it { dates.should include date }
       end
- 
+
       context 'when include is set to :start_date' do
         let(:dates)  { drange.dates_covered(:include => :start_date) }
         it { dates.should include date }
       end
-      
+
       context 'when include is set to :end_date' do
         let(:dates)  { drange.dates_covered(:include => :end_date) }
         it { dates.should include date }
       end
     end
-    
+
     context "when start_date and end_date are different" do
       let(:start_date) { Date.today - 1 }
       let(:end_date) { Date.today }
@@ -728,21 +728,21 @@ describe DateRangeCovers do
         let(:dates)  { drange.dates_covered }
         it { dates.should be_empty }
       end
- 
+
       context 'when include is set to :start_date' do
         let(:dates)  { drange.dates_covered(:include => :start_date) }
         it { dates.length.should == 1 }
         it { dates.should include start_date }
         it { dates.should_not include end_date }
       end
- 
+
       context 'when include is set to :end_date' do
         let(:dates) { drange.dates_covered(:include => :end_date) }
         it { dates.length.should == 1 }
         it { dates.should include end_date }
         it { dates.should_not include start_date }
       end
-      
+
       context 'when include is set to :both' do
         let(:dates) { drange.dates_covered(:include => :both) }
         it { dates.length.should == 2 }
@@ -750,7 +750,7 @@ describe DateRangeCovers do
         it { dates.should include start_date }
       end
     end
-    
+
     context "when start_date and end_date are more than a day apart" do
       let(:start_date) { Date.today - 2 }
       let(:end_date) { Date.today }
@@ -762,21 +762,21 @@ describe DateRangeCovers do
         it { dates.should_not include start_date }
         it { dates.should_not include end_date }
       end
- 
+
       context 'when include is set to :start_date' do
         let(:dates)  { drange.dates_covered(:include => :start_date) }
         it { dates.length.should == 2 }
         it { dates.should include start_date }
         it { dates.should_not include end_date }
       end
- 
+
       context 'when include is set to :end_date' do
         let(:dates) { drange.dates_covered(:include => :end_date) }
         it { dates.length.should == 2 }
         it { dates.should include end_date }
         it { dates.should_not include start_date }
       end
-      
+
       context 'when include is set to :both' do
         let(:dates) { drange.dates_covered(:include => :both) }
         it { dates.length.should == 3 }

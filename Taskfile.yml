@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Build image
+    cmds:
+      - docker-compose build
+
+  test:
+    desc: Run tests
+    deps: [build]
+    cmds:
+      - docker-compose run --rm app bundle exec rspec
+
+  shell:
+    desc: Shell into container
+    deps: [build]
+    cmds:
+      - docker-compose run --rm app /bin/bash
