@@ -14,7 +14,7 @@ module DateRangeCovers
       @beginning_of_week_day = bow_day
       @covs = {}
     end
-  
+
     # Is the date range created, a single date range
     #
     # @example
@@ -24,9 +24,9 @@ module DateRangeCovers
     #   true: when start date and end date are the same
     #   false: when start date and end date are different or either date is nil
     #
-    # @api public 
+    # @api public
     def is_single_date_range?
-      (start_date and end_date and start_date == end_date) ? true : false
+      start_date && end_date && start_date == end_date
     end
 
     # Is the date range created an actual date range
@@ -38,9 +38,9 @@ module DateRangeCovers
     #   true: when start date and end date are different
     #   false: when start date and end date are the same or either date is nil
     #
-    # @api public 
+    # @api public
     def is_date_range?
-      (start_date and end_date and !is_single_date_range?) ? true : false
+      start_date && end_date && !is_single_date_range?
     end
 
     # months_covered
@@ -49,18 +49,18 @@ module DateRangeCovers
     #   months = DateRangeCovers::DateRange.months_covered(options)
     #
     # @options
-    #   :include 
+    #   :include
     #     => :start_month - include the month containing the start date
     #     => :end_month - include the month containing the end date
     #     => :both - include months containing start date and end date respectively
     #
     # @return [starting date of months]
     #
-    # @api public 
+    # @api public
     def months_covered(options={})
       s_date = start_date.dup
       e_date = end_date.dup
-      
+
       months = []
 
       unless options.empty?
@@ -70,23 +70,23 @@ module DateRangeCovers
           months << e_date.beginning_of_month
         when :start_month
           months << s_date.beginning_of_month
-        when :end_month 
+        when :end_month
           months << e_date.beginning_of_month
         end
       end
 
-      #We need to iterate through every month and 
-      #see if the month is wholly contained in the 
+      #We need to iterate through every month and
+      #see if the month is wholly contained in the
       #date range
       bottom_of_month = s_date.beginning_of_month
-      top_of_month = s_date.end_of_month 
+      top_of_month = s_date.end_of_month
 
       while bottom_of_month < e_date do
-        if (s_date..e_date).include?(bottom_of_month..top_of_month) 
+        if (s_date..e_date).include?(bottom_of_month..top_of_month)
           months << bottom_of_month
         end
         bottom_of_month = bottom_of_month.next_month
-        top_of_month = bottom_of_month.end_of_month 
+        top_of_month = bottom_of_month.end_of_month
       end
 
       covs[:months] = months.compact.uniq.sort
@@ -99,16 +99,16 @@ module DateRangeCovers
     #
     # @return boolean
     #
-    # @api private 
+    # @api private
     def date_range_flows_into_selected_months?(s_date, e_date)
       if covs[:months]
         covs[:months].each do |bottom_of_month|
           top_of_month = bottom_of_month.end_of_month
-            
+
           #first condition :the month contains the start date and not the end date
           #second condition :the month contains the end date and not the start date
           if ((bottom_of_month..top_of_month).include?(s_date) and !(bottom_of_month..top_of_month).include?(e_date)) \
-            or ((bottom_of_month..top_of_month).include?(e_date) and !(bottom_of_month..top_of_month).include?(s_date))
+            || ((bottom_of_month..top_of_month).include?(e_date) and !(bottom_of_month..top_of_month).include?(s_date))
               return true #because the range spilled over the month return true
           end
         end
@@ -129,7 +129,7 @@ module DateRangeCovers
     #
     # @return [starting date of weeks]
     #
-    # @api public 
+    # @api public
     def weeks_covered(options={})
       s_date = start_date.dup
       e_date = end_date.dup
@@ -144,30 +144,30 @@ module DateRangeCovers
 
           start_of_e_week = e_date.beginning_of_week(beginning_of_week_day)
 
-          weeks << s_date unless is_covered?(s_date)         
-          weeks << start_of_e_week unless is_covered?(start_of_e_week)         
+          weeks << s_date unless is_covered?(s_date)
+          weeks << start_of_e_week unless is_covered?(start_of_e_week)
 
         when :start_week
           s_date = s_date.beginning_of_week(beginning_of_week_day)
           weeks << s_date unless is_covered?(s_date)
 
-        when :end_week 
+        when :end_week
           e_date = e_date.end_of_week(beginning_of_week_day)
           start_of_e_week = e_date.beginning_of_week(beginning_of_week_day)
-          
-          weeks << start_of_e_week unless is_covered?(start_of_e_week)         
+
+          weeks << start_of_e_week unless is_covered?(start_of_e_week)
         end
       end
 
-      #We need to iterate through every week and 
-      #see if the week is wholly contained in the 
+      #We need to iterate through every week and
+      #see if the week is wholly contained in the
       #date range
       bottom_of_week = s_date.beginning_of_week(beginning_of_week_day)
       top_of_week = s_date.end_of_week(beginning_of_week_day)
 
       while bottom_of_week < e_date do
         if (s_date..e_date).include?(bottom_of_week..top_of_week)\
-            and !date_range_flows_into_selected_months?(bottom_of_week, top_of_week) # if part of a week already belongs to a covered month, we should not add that week to the list
+            && !date_range_flows_into_selected_months?(bottom_of_week, top_of_week) # if part of a week already belongs to a covered month, we should not add that week to the list
           weeks << bottom_of_week unless is_covered?(bottom_of_week)
         end
         bottom_of_week = bottom_of_week.next_week(beginning_of_week_day)
@@ -190,11 +190,11 @@ module DateRangeCovers
     #
     # @return [dates]
     #
-    # @api public 
+    # @api public
     def dates_covered(options={})
       s_date = start_date.dup
       e_date = end_date.dup
-     
+
       if is_single_date_range?
         dates = handle_single_date_range(s_date, e_date, options)
       else
@@ -212,7 +212,7 @@ module DateRangeCovers
         dates = (s_date..e_date).collect { |date| date unless is_covered?(date) }
       end
 
-      return dates
+      dates
     end
 
     def handle_date_range(s_date, e_date, options)
@@ -228,13 +228,13 @@ module DateRangeCovers
         e_date -= 1
       end
 
-      return (s_date..e_date).collect { |date| date unless is_covered?(date) }
+      (s_date..e_date).collect { |date| date unless is_covered?(date) }
     end
 
     # Returns dates within a date range, partitioned in
     # months/weeks/days.
     #
-    # Dates that are not boxed by a week or month, are returned as days. 
+    # Dates that are not boxed by a week or month, are returned as days.
     #
     # @example
     #   covered_range = DateRangeCovers::DateRange.covers
@@ -242,17 +242,17 @@ module DateRangeCovers
     #
     # @params
     #   [:all] or no params => default, the date range partitioned into months, weeks and days
-    #   [:days] => all dates within the date range   
+    #   [:days] => all dates within the date range
     #   [:weeks] => the days in the date range partitioned into weeks/days
     #   [:months] => days in the date range partitioned into months/days
-    
+
     #   [:days, :weeks] => same as [:weeks]
     #   [:days, :months] => same as [:months]
     #   [:weeks, :months] => same as [:all]
     #
     # @return Hash
     #
-    # @api public 
+    # @api public
     def covers(cover_options = [:all])
       @covs = {}
 
@@ -266,23 +266,23 @@ module DateRangeCovers
         dates_covered(:include => :both)
       end
 
-      return covs
+      covs
     end
 
     def is_covered?(dates)
       is_covered = false
 
-      if !is_covered and covs[:months] and !covs[:months].empty?
+      if !is_covered && covs[:months] && !covs[:months].empty?
         start_month = covs[:months].first
         end_month = covs[:months].last.end_of_month
-        is_covered = (start_month..end_month).include?(dates) ? true : false
+        is_covered = (start_month..end_month).include?(dates)
       end
 
-      if !is_covered and covs[:weeks] and !covs[:weeks].empty?
+      if !is_covered && covs[:weeks] && !covs[:weeks].empty?
         covs[:weeks].each do |week_date|
           start_week = week_date.beginning_of_week(beginning_of_week_day)
           end_week = week_date.end_of_week(beginning_of_week_day)
-          is_covered = (start_week..end_week).include?(dates) ? true : false
+          is_covered = (start_week..end_week).include?(dates)
           break if is_covered
         end
       end
@@ -292,6 +292,6 @@ module DateRangeCovers
 
     private :is_covered?, :date_range_flows_into_selected_months?
     private :handle_single_date_range, :handle_date_range
- 
+
   end
 end
