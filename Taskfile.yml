@@ -6,8 +6,15 @@ tasks:
     cmds:
       - docker-compose build
 
+  lint:
+    desc: Run linter
+    deps: [build]
+    cmds:
+      - docker-compose run --rm app bundle exec rubocop
+
   test:
     desc: Run tests
+    deps: [build]
     cmds:
       - docker-compose run --rm app bundle exec rspec
 
