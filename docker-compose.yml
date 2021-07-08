@@ -6,5 +6,7 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
       - "./lib:/usr/src/app/lib"
       - "./spec:/usr/src/app/spec"
+      - "./.rubocop.yml:/usr/src/app/.rubocop.yml"
+      - "./date_range_covers.gemspec:/usr/src/app/date_range_covers.gemspec"
 
 

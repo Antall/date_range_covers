@@ -1,5 +1,5 @@
+# frozen_string_literal: true
+
 # spec_helper.rb
 
-RSpec.configure do |config|
-  config.raise_errors_for_deprecations!
-end
+RSpec.configure(&:raise_errors_for_deprecations!)
