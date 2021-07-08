@@ -15,27 +15,17 @@ jobs:
 
     name: Ruby ${{ matrix.ruby }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Step 1 - Checkout code
+        uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
+      - name: Step 2 - Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - name: Set up bundler
-        run: gem install bundler -v 2.2
-
-      - uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Install dependencies
-        run: |
-          bundle config path vendor/bundle
-          bundle install
-
-      - name: Run tests
+      - name: Step 3 - Run tests
         run: bundle exec rspec
+
+      # - name: Step 4 - Run linter
+      #   run: bundle exec rubocop
